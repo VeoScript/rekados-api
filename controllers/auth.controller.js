@@ -14,9 +14,9 @@ class AuthController {
     }
   
     try {
-      const user = await prisma.user.findMany({
+      const user = await prisma.user.findFirst({
         where: {
-          id: req.session.id
+          id: String(req.session.user.id)
         },
         select: {
           id: true,
