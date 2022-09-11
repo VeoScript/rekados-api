@@ -22,6 +22,6 @@ router.post('/login', session, AuthController.login)
 
 router.post('/logout', session, AuthController.logout)
 
-router.get('/user/:id', session, AuthController.user)
+router.get('/user', session, AuthController.user)
 
 module.exports = router;
