@@ -5,7 +5,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 class AuthController {
-  static users = async (req, res, next) => {
+  static user = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({
         message: 'Unauthorized!'
@@ -14,14 +14,17 @@ class AuthController {
     }
   
     try {
-      const users = await prisma.user.findMany({
+      const user = await prisma.user.findMany({
+        where: {
+          id: req.session.id
+        },
         select: {
           id: true,
           name: true,
           email: true
         }
       })
-      res.status(200).json(users)
+      res.status(200).json(user)
     } catch (e) {
       next(createError(e.statusCode, e.message))
     }
@@ -89,7 +92,6 @@ class AuthController {
       }
 
       const userId = foundUser[0].id
-      const userEmail = foundUser[0].email
       const userHashPassword = foundUser[0].password
 
       const matchedPassword = await bcrypt.compare(password, userHashPassword)
@@ -120,17 +122,17 @@ class AuthController {
     })
   }
 
-  static checkLogin = async (req, res) => {
-    if (req.session.user !== undefined) {
-      res.status(200).json({
-        message: 'Authenticated'
-      })
-    } else {
-      res.status(200).json({
-        message: 'Unauthenticated'
-      })
-    }
-  }
+  // static checkLogin = async (req, res) => {
+  //   if (req.session.user !== undefined) {
+  //     res.status(200).json({
+  //       message: 'Authenticated'
+  //     })
+  //   } else {
+  //     res.status(200).json({
+  //       message: 'Unauthenticated'
+  //     })
+  //   }
+  // }
 }
 
 module.exports = AuthController
