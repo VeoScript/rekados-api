@@ -32,7 +32,7 @@ class AuthController {
 
   static register = async (req, res, next) => {
     try {
-      const { name, email, password } = req.body
+      const { name, email, username, password } = req.body
 
       const foundUser = await prisma.user.findMany({
         where: {
@@ -58,6 +58,7 @@ class AuthController {
         data: {
           name: name,
           email: email,
+          username: username,
           password: hashPassword
         }
       })
