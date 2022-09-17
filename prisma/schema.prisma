@@ -11,8 +11,47 @@ datasource db {
 }
 
 model User {
-  id            String        @id         @default(cuid())
-  name          String
-  email         String
-  password      String
+  id                        String              @id                     @default(cuid())
+  profile                   String?
+  name                      String
+  location                  String?
+  bio                       String?
+  username                  String              @unique                 @default(cuid())
+  email                     String
+  password                  String
+  dishes                    Dish[]
+}
+
+model Dish {
+  id                        String              @id                     @default(cuid())
+  image                     String
+  title                     String
+  category                  String
+  location                  String
+  description               String              @db.LongText
+  youtube                   String
+  ingredients               Ingredient[]
+  procedures                Procedure[]
+  author                    User                                        @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId                  String
+
+  @@index([authorId])
+}
+
+model Ingredient {
+  id                        String              @id                     @default(cuid())
+  name                      String
+  dish                      Dish                                        @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dishId                    String
+
+  @@index([dishId])
+}
+
+model Procedure {
+  id                        String              @id                     @default(cuid())
+  details                   String              @db.LongText
+  dish                      Dish                                        @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dishId                    String
+  
+  @@index([dishId])
 }
