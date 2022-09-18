@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const createError = require('http-errors');
 const morgan = require('morgan');
+require('express-async-errors');
 require('dotenv').config();
 
 const app = express();
