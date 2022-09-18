@@ -11,12 +11,12 @@ class DishController {
       })
       return
     }
+    
+    const limit = 5
+    const cursor = req.query.cursor ?? ''
+    const cursorObj = cursor === '' ? undefined : { id: String(cursor) }
 
-    try {
-      const limit = 5
-      const cursor = req.query.cursor ?? ''
-      const cursorObj = cursor === '' ? undefined : { id: String(cursor) }
-      
+    try {      
       const dishes = await prisma.dish.findMany({
         select: {
           id: true,
@@ -39,7 +39,7 @@ class DishController {
             }
           },
           orderBy: {
-            index: 'desc'
+            createdAt: 'desc'
           },
           take: limit,
           cursor: cursorObj,
