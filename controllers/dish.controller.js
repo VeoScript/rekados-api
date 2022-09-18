@@ -12,6 +12,10 @@ class DishController {
       return
     }
 
+    const limit = 5
+    const cursor = req.query.cursor ?? ''
+    const cursorObj = cursor === '' ? undefined : { id: String(cursor) }
+
     try {
       const dishes = await prisma.dish.findMany({
         select: {
@@ -33,10 +37,19 @@ class DishController {
               id: true,
               details: true
             }
-          }
+          },
+          orderBy: {
+            index: 'desc'
+          },
+          take: limit,
+          cursor: cursorObj,
+          skip: cursor === '' ? 0 : 1
         }
       })
-      res.status(200).json(dishes)
+      res.status(200).json({
+        dishes,
+        nextId:  dishes.length === limit ? dishes[limit - 1].id : undefined
+      })
     } catch (e) {
       next(createError(e.statusCode, e.message))
     }
