@@ -31,87 +31,97 @@ class AuthController {
   }
 
   static register = async (req, res, next) => {
-    const { name, email, username, password } = req.body
+    try {
+      const { name, email, username, password } = req.body
 
-    const foundUser = await prisma.user.findMany({
-      where: {
-        email: email
-      },
-      select: {
-        email: true
-      }
-    })
-
-    const check_email_exist = foundUser.some((user) => user.email === email)
-    const check_username_exist = foundUser.some((user) => user.username === username)
-
-    if (check_email_exist) {
-      return res.status(500).json({
-        message: 'Email already exists.'
+      const foundUser = await prisma.user.findMany({
+        where: {
+          email: email
+        },
+        select: {
+          email: true
+        }
       })
-    }
 
-    if (check_username_exist) {
-      return res.status(500).json({
-        message: 'Username already exists.'
-      })
-    }
+      const check_email_exist = foundUser.some((user) => user.email === email)
+      const check_username_exist = foundUser.some((user) => user.username === username)
 
-    const salt = await bcrypt.genSalt()
-    const hashPassword = await bcrypt.hash(password, salt)
-    
-    await prisma.user.create({
-      data: {
-        name: name,
-        email: email,
-        username: username,
-        password: hashPassword
+      if (check_email_exist) {
+        return res.status(500).json({
+          message: 'Email already exists.'
+        })
       }
-    })
 
-    res.status(200).json({
-      message: 'Registered successfully.'
-    })
+      if (check_username_exist) {
+        return res.status(500).json({
+          message: 'Username already exists.'
+        })
+      }
+  
+      const salt = await bcrypt.genSalt()
+      const hashPassword = await bcrypt.hash(password, salt)
+      
+      await prisma.user.create({
+        data: {
+          name: name,
+          email: email,
+          username: username,
+          password: hashPassword
+        }
+      })
+  
+      res.status(200).json({
+        message: 'Registered successfully.'
+      })
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
   }
 
   static login = async (req, res, next) => {
-    const { email, password } = req.body
+    try {
+      const { email, password } = req.body
   
-    const foundUser = await prisma.user.findMany({
-      where: {
-        email: email
-      },
-      select: {
-        id: true,
-        email: true,
-        password: true
+      const foundUser = await prisma.user.findMany({
+        where: {
+          email: email
+        },
+        select: {
+          id: true,
+          email: true,
+          password: true
+        }
+      })
+  
+      if (!foundUser[0]) {
+        return res.status(500).json({
+          message: 'Account not found, sign up first.'
+        })
       }
-    })
 
-    if (!foundUser[0]) {
-      return res.status(500).json({
-        message: 'Account not found, sign up first.'
+      const userId = foundUser[0].id
+      const userHashPassword = foundUser[0].password
+
+      const matchedPassword = await bcrypt.compare(password, userHashPassword)
+
+      if (!matchedPassword) {
+        return res.status(500).json({
+          message: 'Password is incorrect!'
+        })
+      }
+
+      req.session.user = { id: userId }
+
+      await req.session.save();
+      
+      res.status(200).json({
+        message: 'Logged in successfully.'
       })
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
     }
-
-    const userId = foundUser[0].id
-    const userHashPassword = foundUser[0].password
-
-    const matchedPassword = await bcrypt.compare(password, userHashPassword)
-
-    if (!matchedPassword) {
-      return res.status(500).json({
-        message: 'Password is incorrect!'
-      })
-    }
-
-    req.session.user = { id: userId }
-
-    await req.session.save();
-    
-    res.status(200).json({
-      message: 'Logged in successfully.'
-    })
   }
 
   static logout = async (req, res) => {
