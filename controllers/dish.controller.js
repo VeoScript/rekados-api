@@ -33,9 +33,6 @@ class DishController {
               id: true,
               details: true
             }
-          },
-          orderBy: {
-            createdAt: 'desc'
           }
         }
       })
