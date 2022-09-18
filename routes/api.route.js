@@ -24,7 +24,7 @@ router.post('/logout', session, AuthController.logout)
 router.get('/user', session, AuthController.user)
 
 // Dishes Routes
-router.get('/dishes', session, DishController.index)
+router.get('/dishes', DishController.index)
 router.post('/create-dish', session, DishController.store)
 
 module.exports = router;

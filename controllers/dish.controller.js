@@ -5,13 +5,6 @@ const prisma = new PrismaClient();
 
 class DishController {
   static index = async (req, res, next) => {
-    if (req.session.user === undefined) {
-      res.status(401).json({
-        message: 'Unauthorized!'
-      })
-      return
-    }
-
     try {      
       const dishes = await prisma.dish.findMany({
         select: {
@@ -25,13 +18,15 @@ class DishController {
           ingredients: {
             select: {
               id: true,
-              name: true
+              name: true,
+              dishId: true
             }
           },
           procedures: {
             select: {
               id: true,
-              details: true
+              details: true,
+              dishId: true
             }
           }
         }
