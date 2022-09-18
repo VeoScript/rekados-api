@@ -26,7 +26,9 @@ class AuthController {
       })
       res.status(200).json(user)
     } catch (e) {
-      next(createError(e.statusCode, e.message))
+      // next(createError(e.statusCode, e.message))
+      console.error(e)
+      process.exit(1)
     }
   }
 
@@ -74,7 +76,8 @@ class AuthController {
         message: 'Registered successfully.'
       })
     } catch (e) {
-      next(createError(e.statusCode, e.message))
+      // next(createError(e.statusCode, e.message))
+      console.error(e)
       process.exit(1)
     }
   }
@@ -119,7 +122,8 @@ class AuthController {
         message: 'Logged in successfully.'
       })
     } catch (e) {
-      next(createError(e.statusCode, e.message))
+      // next(createError(e.statusCode, e.message))
+      console.error(e)
       process.exit(1)
     }
   }
