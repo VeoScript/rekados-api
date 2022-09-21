@@ -1,3 +1,4 @@
+const createError = require("http-errors");
 require('express-async-errors');
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -32,7 +33,7 @@ class DishController {
       })
       res.status(200).json(dishes)
     } catch (e) {
-      console.error(e)
+      next(createError(e.statusCode, e.message))
       process.exit(1)
     }
   }
@@ -61,7 +62,7 @@ class DishController {
       })
       res.status(200).json(createDish)
     } catch (e) {
-      console.error(e)
+      next(createError(e.statusCode, e.message))
       process.exit(1)
     }
   }

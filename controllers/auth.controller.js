@@ -1,3 +1,4 @@
+const createError = require("http-errors");
 require('express-async-errors');
 var bcrypt = require('bcryptjs')
 
@@ -26,7 +27,7 @@ class AuthController {
       })
       res.status(200).json(user)
     } catch (e) {
-      console.error(e)
+      next(createError(e.statusCode, e.message))
       process.exit(1)
     }
   }
@@ -36,9 +37,6 @@ class AuthController {
       const { name, email, username, password } = req.body
 
       const foundUser = await prisma.user.findMany({
-        where: {
-          email: email
-        },
         select: {
           email: true,
           username: true
@@ -46,21 +44,20 @@ class AuthController {
       })
 
       const check_email_exist = foundUser.some((user) => user.email === email)
+      const check_username_exist = foundUser.some((user) => user.username === username)
 
       if (check_email_exist) {
         return res.status(400).json({
-          message: 'Email already exists.'
+          message: 'Email is not available.'
         })
       }
       
-      const check_username_exist = foundUser.some((user) => user.username === username)
-
       if (check_username_exist) {
         return res.status(400).json({
           message: 'Username already exists.'
         })
-      }
-
+      } 
+      
       const salt = await bcrypt.genSalt()
       const hashPassword = await bcrypt.hash(password, salt)
       
@@ -76,8 +73,9 @@ class AuthController {
       res.status(200).json({
         message: 'Registered successfully.'
       })
+
     } catch (e) {
-      console.error(e)
+      next(createError(e.statusCode, e.message))
       process.exit(1)
     }
   }
@@ -122,7 +120,7 @@ class AuthController {
         message: 'Logged in successfully.'
       })
     } catch (e) {
-      console.error(e)
+      next(createError(e.statusCode, e.message))
       process.exit(1)
     }
   }
