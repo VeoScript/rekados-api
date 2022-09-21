@@ -22,6 +22,8 @@ model User {
   email                     String
   password                  String
   dishes                    Dish[]
+
+  @@unique([email, username])
 }
 
 model Dish {
