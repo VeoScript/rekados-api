@@ -48,13 +48,13 @@ class AuthController {
       const check_username_exist = foundUser.some((user) => user.username === username)
 
       if (check_email_exist) {
-        return res.status(500).json({
+        return res.status(400).json({
           message: 'Email already exists.'
         })
       }
 
       if (check_username_exist) {
-        return res.status(500).json({
+        return res.status(400).json({
           message: 'Username already exists.'
         })
       }
@@ -96,7 +96,7 @@ class AuthController {
       })
   
       if (!foundUser[0]) {
-        return res.status(500).json({
+        return res.status(400).json({
           message: 'Account not found, sign up first.'
         })
       }
@@ -107,7 +107,7 @@ class AuthController {
       const matchedPassword = await bcrypt.compare(password, userHashPassword)
 
       if (!matchedPassword) {
-        return res.status(500).json({
+        return res.status(400).json({
           message: 'Password is incorrect!'
         })
       }
