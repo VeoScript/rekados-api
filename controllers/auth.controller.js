@@ -40,7 +40,8 @@ class AuthController {
           email: email
         },
         select: {
-          email: true
+          email: true,
+          username: true
         }
       })
 
