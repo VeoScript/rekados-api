@@ -18,7 +18,7 @@ model User {
   name                      String
   location                  String?
   bio                       String?
-  username                  String              @unique                 @default(cuid())
+  username                  String                                      @default(cuid())
   email                     String
   password                  String
   dishes                    Dish[]
