@@ -46,13 +46,14 @@ class AuthController {
       })
 
       const check_email_exist = foundUser.some((user) => user.email === email)
-      const check_username_exist = foundUser.some((user) => user.username === username)
 
       if (check_email_exist) {
         return res.status(400).json({
           message: 'Email already exists.'
         })
       }
+      
+      const check_username_exist = foundUser.some((user) => user.username === username)
 
       if (check_username_exist) {
         return res.status(400).json({
