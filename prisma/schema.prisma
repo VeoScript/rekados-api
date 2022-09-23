@@ -28,7 +28,7 @@ model User {
 
 model Dish {
   id                        String              @id                     @default(cuid())
-  slug                      String              @unique
+  slug                      String              @db.VarChar(255)
   image                     String?
   title                     String
   category                  String
@@ -42,6 +42,7 @@ model Dish {
   createdAt                 DateTime                                    @default(now()) @db.DateTime(6)
   updatedAt                 DateTime                                    @default(now()) @db.DateTime(6)
 
+  @@unique([slug])
   @@index([authorId])
 }
 
