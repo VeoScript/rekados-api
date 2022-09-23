@@ -60,10 +60,11 @@ class DishController {
     }
 
     try {
-      const { image, title, category, location, description, youtube, authorId } = req.body
+      const { slug, image, title, category, location, description, youtube, authorId } = req.body
       
       const createDish = await prisma.dish.create({
         data: {
+          slug: slug,
           image: image,
           title: title,
           category: category,
@@ -73,7 +74,58 @@ class DishController {
           authorId: authorId
         }
       })
+
       res.status(200).json(createDish)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
+  static storeIngredients = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const { ingredient, slug } = req.body
+
+      const ingredients = await prisma.ingredient.createMany({
+        data: {
+          name: ingredient,
+          dishSlug: slug
+        }
+      })
+
+      res.status(200).json(ingredients)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
+  static storeProcedures = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const { procedure, slug } = req.body
+
+      const procedures = await prisma.procedure.createMany({
+        data: {
+          name: procedure,
+          dishSlug: slug
+        }
+      })
+
+      res.status(200).json(procedures)
     } catch (e) {
       next(createError(e.statusCode, e.message))
       process.exit(1)

@@ -48,17 +48,17 @@ model Dish {
 model Ingredient {
   id                        String              @id                     @default(cuid())
   name                      String
-  dish                      Dish                                        @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  dishId                    String
+  dish                      Dish                                        @relation(fields: [dishSlug], references: [slug], onDelete: Cascade, onUpdate: Cascade)
+  dishSlug                  String
 
-  @@index([dishId])
+  @@index([dishSlug])
 }
 
 model Procedure {
   id                        String              @id                     @default(cuid())
   details                   String              @db.LongText
-  dish                      Dish                                        @relation(fields: [dishId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  dishId                    String
-  
-  @@index([dishId])
+  dish                      Dish                                        @relation(fields: [dishSlug], references: [slug], onDelete: Cascade, onUpdate: Cascade)
+  dishSlug                  String
+
+  @@index([dishSlug])
 }
