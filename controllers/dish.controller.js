@@ -13,12 +13,15 @@ class DishController {
       const dishes = await prisma.dish.findMany({
         select: {
           id: true,
+          slug: true,
           image: true,
           title: true,
           category: true,
           location: true,
           description: true,
           youtube: true,
+          createdAt: true,
+          updatedAt: true,
           ingredients: {
             select: {
               id: true,
