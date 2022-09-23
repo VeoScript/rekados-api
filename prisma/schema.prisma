@@ -28,6 +28,7 @@ model User {
 
 model Dish {
   id                        String              @id                     @default(cuid())
+  slug                      String              @unique
   image                     String?
   title                     String
   category                  String
