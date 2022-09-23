@@ -26,5 +26,7 @@ router.get('/user', session, AuthController.user)
 // Dishes Routes
 router.get('/dishes', DishController.index)
 router.post('/create-dish', session, DishController.store)
+router.post('/create-ingredient', session, DishController.storeIngredients)
+router.post('/create-procedure', session, DishController.storeProcedures)
 
 module.exports = router;
