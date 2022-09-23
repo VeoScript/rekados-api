@@ -64,14 +64,14 @@ class DishController {
       
       const createDish = await prisma.dish.create({
         data: {
-          slug: slug,
-          image: image,
-          title: title,
-          category: category,
-          location: location,
-          description: description,
-          youtube: youtube,
-          authorId: authorId
+          slug: String(slug),
+          image: String(image),
+          title: String(title),
+          category: String(category),
+          location: String(location),
+          description: String(description),
+          youtube: String(youtube),
+          authorId: String(authorId)
         }
       })
 
@@ -95,8 +95,8 @@ class DishController {
 
       const ingredients = await prisma.ingredient.createMany({
         data: {
-          name: ingredient,
-          dishSlug: slug
+          name: String(ingredient),
+          dishSlug: String(slug)
         }
       })
 
@@ -120,8 +120,8 @@ class DishController {
 
       const procedures = await prisma.procedure.createMany({
         data: {
-          name: procedure,
-          dishSlug: slug
+          name: String(procedure),
+          dishSlug: String(slug)
         }
       })
 
