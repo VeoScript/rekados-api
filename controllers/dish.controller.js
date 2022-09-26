@@ -26,14 +26,14 @@ class DishController {
             select: {
               id: true,
               name: true,
-              dishId: true
+              dishSlug: true
             }
           },
           procedures: {
             select: {
               id: true,
               details: true,
-              dishId: true
+              dishSlug: true
             }
           }
         },
