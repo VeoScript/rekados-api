@@ -35,7 +35,14 @@ class DishController {
               details: true,
               dishSlug: true
             }
-          }
+          },
+          author: {
+            select: {
+              id: true,
+              name: true,
+              username: true
+            }
+          } 
         },
         orderBy: {
           createdAt: 'desc'
