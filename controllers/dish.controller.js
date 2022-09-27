@@ -123,7 +123,7 @@ class DishController {
 
       const procedures = await prisma.procedure.createMany({
         data: {
-          name: String(procedure),
+          details: String(procedure),
           dishSlug: String(slug)
         }
       })
