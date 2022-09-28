@@ -20,6 +20,7 @@ class DishController {
           location: true,
           description: true,
           youtube: true,
+          comments: true,
           createdAt: true,
           updatedAt: true,
           ingredients: {
@@ -34,21 +35,6 @@ class DishController {
               id: true,
               details: true,
               dishSlug: true
-            }
-          },
-          comments: {
-            select: {
-              id: true,
-              content: true,
-              dishSlug: true,
-              createdAt: true,
-              user: {
-                select: {
-                  id: true,
-                  name: true,
-                  profile: true
-                }
-              }
             }
           },
           author: {
