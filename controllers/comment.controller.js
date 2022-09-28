@@ -33,6 +33,9 @@ class CommentController {
               profile: true
             }
           }
+        },
+        orderBy: {
+          id: 'desc'
         }
       })
 
