@@ -28,5 +28,6 @@ router.get('/dishes', DishController.index)
 router.post('/create-dish', session, DishController.store)
 router.post('/create-ingredient', session, DishController.storeIngredients)
 router.post('/create-procedure', session, DishController.storeProcedures)
+router.post('/create-comment', session, DishController.createComment)
 
 module.exports = router;

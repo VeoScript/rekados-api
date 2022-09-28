@@ -36,6 +36,21 @@ class DishController {
               dishSlug: true
             }
           },
+          comments: {
+            select: {
+              id: true,
+              content: true,
+              dishSlug: true,
+              createdAt: true,
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  profile: true
+                }
+              }
+            }
+          },
           author: {
             select: {
               id: true,
@@ -140,6 +155,32 @@ class DishController {
       process.exit(1)
     }
   }
+
+  static createComment = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const { comment, slug } = req.body
+
+      const createComments = await prisma.comment.create({
+        data: {
+          content: String(comment),
+          dishSlug: String(slug),
+          userId: String(req.session.user.id)
+        }
+      })
+
+      res.status(200).json(createComments)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }  
 }
 
 module.exports = DishController
