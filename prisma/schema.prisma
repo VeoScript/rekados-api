@@ -76,5 +76,5 @@ model Comment {
   createdAt                 DateTime                                    @default(now()) @db.DateTime(6)
   updatedAt                 DateTime                                    @default(now()) @db.DateTime(6)
 
-  @@index([dishSlug])
+  @@index([dishSlug, userId])
 }
