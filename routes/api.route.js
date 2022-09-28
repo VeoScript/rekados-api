@@ -12,6 +12,7 @@ var session = ironSession({
 
 const AuthController = require('../controllers/auth.controller');
 const DishController = require('../controllers/dish.controller');
+const CommentController = require('../controllers/comment.controller');
 
 router.get('/', async (req, res, next) => {
   res.send({ message: 'Rekados API Start Here...' });
@@ -28,6 +29,9 @@ router.get('/dishes', DishController.index)
 router.post('/create-dish', session, DishController.store)
 router.post('/create-ingredient', session, DishController.storeIngredients)
 router.post('/create-procedure', session, DishController.storeProcedures)
-router.post('/create-comment', session, DishController.createComment)
+
+// Comments Routes
+router.get('/comments', session, CommentController.index)
+router.post('/create-comment', session, CommentController.store)
 
 module.exports = router;
