@@ -14,7 +14,7 @@ class LikeController {
     }
 
     try {
-      const { slug } = req.body
+      const slug = req.query.slug ?? ''
 
       const onLike = await prisma.like.create({
         data: {
@@ -39,7 +39,7 @@ class LikeController {
     }
 
     try {
-      const { slug } = req.body
+      const slug = req.query.slug ?? ''
 
       const onUnlike = await prisma.like.deleteMany({
         where: {
