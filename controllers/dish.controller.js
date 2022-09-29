@@ -40,6 +40,7 @@ class DishController {
             select: {
               id: true,
               dishSlug: true,
+              userId: true,
               user: {
                 select: {
                   id: true,
