@@ -1,6 +1,5 @@
 const createError = require("http-errors");
 require('express-async-errors');
-var bcrypt = require('bcryptjs')
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
