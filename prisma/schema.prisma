@@ -22,6 +22,7 @@ model User {
   email                     String
   password                  String
   dishes                    Dish[]
+  likes                     Like[]
   comments                  Comment[]
 
   @@unique([email, username])
@@ -38,6 +39,7 @@ model Dish {
   youtube                   String
   ingredients               Ingredient[]
   procedures                Procedure[]
+  likes                     Like[]
   comments                  Comment[]
   author                    User                                        @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId                  String
@@ -64,6 +66,18 @@ model Procedure {
   dishSlug                  String
 
   @@index([dishSlug])
+}
+
+model Like {
+  id                        String              @id                     @default(cuid())
+  dish                      Dish                                        @relation(fields: [dishSlug], references: [slug], onDelete: Cascade, onUpdate: Cascade)
+  dishSlug                  String
+  user                      User                                        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId                    String
+  createdAt                 DateTime                                    @default(now()) @db.DateTime(6)
+  updatedAt                 DateTime                                    @default(now()) @db.DateTime(6)
+
+  @@index([dishSlug, userId])
 }
 
 model Comment {

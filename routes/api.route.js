@@ -12,6 +12,7 @@ var session = ironSession({
 
 const AuthController = require('../controllers/auth.controller');
 const DishController = require('../controllers/dish.controller');
+const LikeController = require('../controllers/like.controller');
 const CommentController = require('../controllers/comment.controller');
 
 router.get('/', async (req, res, next) => {
@@ -19,16 +20,20 @@ router.get('/', async (req, res, next) => {
 });
 
 // Authentication Routes
+router.get('/user', session, AuthController.user)
 router.post('/register', session, AuthController.register)
 router.post('/login', session, AuthController.login)
 router.post('/logout', session, AuthController.logout)
-router.get('/user', session, AuthController.user)
 
 // Dishes Routes
 router.get('/dishes', DishController.index)
 router.post('/create-dish', session, DishController.store)
 router.post('/create-ingredient', session, DishController.storeIngredients)
 router.post('/create-procedure', session, DishController.storeProcedures)
+
+// Likes Routes
+router.post('/like', session, LikeController.like)
+router.delete('/unlike', session, LikeController.unlike)
 
 // Comments Routes
 router.get('/comments', session, CommentController.index)

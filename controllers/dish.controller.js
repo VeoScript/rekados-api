@@ -36,6 +36,20 @@ class DishController {
               dishSlug: true
             }
           },
+          likes: {
+            select: {
+              id: true,
+              dishSlug: true,
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  profile: true,
+                  username: true
+                }
+              }
+            }
+          },
           comments: {
             select: {
               id: true,
@@ -46,7 +60,8 @@ class DishController {
                 select: {
                   id: true,
                   name: true,
-                  profile: true
+                  profile: true,
+                  username: true
                 }
               }
             }
