@@ -91,6 +91,76 @@ class DishController {
     }
   }
 
+  static show = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const { slug } = req.body
+
+      const dish = await prisma.dish.findFirst({
+        where: {
+          slug: String(slug)
+        },
+        select: {
+          id: true,
+          slug: true,
+          image: true,
+          title: true,
+          category: true,
+          location: true,
+          description: true,
+          youtube: true,
+          createdAt: true,
+          updatedAt: true,
+          ingredients: {
+            select: {
+              id: true,
+              name: true,
+              dishSlug: true
+            }
+          },
+          procedures: {
+            select: {
+              id: true,
+              details: true,
+              dishSlug: true
+            }
+          },
+          likes: {
+            select: {
+              id: true,
+              dishSlug: true,
+              userId: true,
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  profile: true,
+                  username: true
+                }
+              }
+            }
+          },
+          author: {
+            select: {
+              id: true,
+              name: true
+            }
+          }
+        }
+      })
+      res.status(200).json(dish)
+    } catch (error) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
   static store = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({

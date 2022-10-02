@@ -27,6 +27,7 @@ router.post('/logout', session, AuthController.logout)
 
 // Dishes Routes
 router.get('/dishes', DishController.index)
+router.get('/dish/:slug', session, DishController.show)
 router.post('/create-dish', session, DishController.store)
 router.post('/create-ingredient', session, DishController.storeIngredients)
 router.post('/create-procedure', session, DishController.storeProcedures)
