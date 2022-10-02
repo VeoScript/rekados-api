@@ -153,7 +153,7 @@ class DishController {
         }
       })
       res.status(200).json(dish)
-    } catch (error) {
+    } catch (e) {
       next(createError(e.statusCode, e.message))
       process.exit(1)
     }
@@ -234,6 +234,27 @@ class DishController {
       })
 
       res.status(200).json(procedures)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
+  static destroy = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const deleteDish = await prisma.dish.delete({
+        where: {
+          slug: String(req.params.slug)
+        }
+      })
+      res.status(200).json(deleteDish)
     } catch (e) {
       next(createError(e.statusCode, e.message))
       process.exit(1)
