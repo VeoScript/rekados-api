@@ -100,11 +100,9 @@ class DishController {
     }
 
     try {
-      const { slug } = req.params
-
       const dish = await prisma.dish.findFirst({
         where: {
-          slug: String(slug)
+          slug: String(req.params.slug)
         },
         select: {
           id: true,
