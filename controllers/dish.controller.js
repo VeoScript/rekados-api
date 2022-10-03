@@ -4,6 +4,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 class DishController {
+  // get all dishes
   static index = async (req, res, next) => {
     try {
       const limit = 5
@@ -91,6 +92,7 @@ class DishController {
     }
   }
 
+  // get dish details
   static show = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({
@@ -159,6 +161,7 @@ class DishController {
     }
   }
 
+  // create dish function
   static store = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({
@@ -190,6 +193,7 @@ class DishController {
     }
   }
 
+  // store dish ingredients function
   static storeIngredients = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({
@@ -215,6 +219,7 @@ class DishController {
     }
   }
 
+  // store dish procedures function
   static storeProcedures = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({
@@ -240,6 +245,54 @@ class DishController {
     }
   }
 
+  // update dish function
+  static update = async (req, res,next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const { slug, image, title, category, location, description, youtube, authorId } = req.body
+
+      await prisma.ingredient.deleteMany({
+        where: {
+          dishSlug: String(slug)
+        }
+      })
+
+      await prisma.procedure.deleteMany({
+        where: {
+          dishSlug: String(slug)
+        }
+      })
+      
+      const updateDish = await prisma.dish.update({
+        where: {
+          slug: String(slug)
+        },
+        data: {
+          slug: String(slug),
+          image: String(image),
+          title: String(title),
+          category: String(category),
+          location: String(location),
+          description: String(description),
+          youtube: String(youtube),
+          authorId: String(authorId)
+        }
+      })
+
+      res.status(200).json(updateDish)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
+  // delete dish function
   static destroy = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({
