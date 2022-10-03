@@ -31,6 +31,7 @@ router.get('/dish/:slug', session, DishController.show)
 router.post('/create-dish', session, DishController.store)
 router.post('/create-ingredient', session, DishController.storeIngredients)
 router.post('/create-procedure', session, DishController.storeProcedures)
+router.put('/update-dish', session, DishController.update)
 router.delete('/delete-dish/:slug', session, DishController.destroy)
 
 // Likes Routes
