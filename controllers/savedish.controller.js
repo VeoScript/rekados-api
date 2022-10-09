@@ -18,74 +18,74 @@ class SaveDishController {
       const cursor = req.query.cursor ?? ''
       const cursorObj = cursor === '' ? undefined : { id: String(cursor) }
 
-      const saveDish = await prisma.like.findMany({
+      const saveDish = await prisma.dish.findMany({
         where: {
-          userId: String(req.session.user.id)
+          likes: {
+            some: {
+              userId: String(req.session.user.id)
+            }
+          }
         },
         select: {
-          dish: {
+          id: true,
+          slug: true,
+          image: true,
+          title: true,
+          category: true,
+          location: true,
+          description: true,
+          youtube: true,
+          createdAt: true,
+          updatedAt: true,
+          ingredients: {
             select: {
               id: true,
-              slug: true,
-              image: true,
-              title: true,
-              category: true,
-              location: true,
-              description: true,
-              youtube: true,
-              createdAt: true,
-              updatedAt: true,
-              ingredients: {
+              name: true,
+              dishSlug: true
+            }
+          },
+          procedures: {
+            select: {
+              id: true,
+              details: true,
+              dishSlug: true
+            }
+          },
+          likes: {
+            select: {
+              id: true,
+              dishSlug: true,
+              userId: true,
+              user: {
                 select: {
                   id: true,
                   name: true,
-                  dishSlug: true
-                }
-              },
-              procedures: {
-                select: {
-                  id: true,
-                  details: true,
-                  dishSlug: true
-                }
-              },
-              likes: {
-                select: {
-                  id: true,
-                  dishSlug: true,
-                  userId: true,
-                  user: {
-                    select: {
-                      id: true,
-                      name: true,
-                      profile: true,
-                      username: true
-                    }
-                  }
-                }
-              },
-              comments: {
-                select: {
-                  id: true,
-                  content: true,
-                  dishSlug: true,
-                  createdAt: true,
-                  user: {
-                    select: {
-                      id: true,
-                      name: true,
-                      profile: true,
-                      username: true
-                    }
-                  }
-                }
-              },
-              author: {
-                select: {
-                  id: true,
-                  name: true
+                  profile: true,
+                  username: true
                 }
               }
+            }
+          },
+          comments: {
+            select: {
+              id: true,
+              content: true,
+              dishSlug: true,
+              createdAt: true,
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  profile: true,
+                  username: true
+                }
+              }
+            }
+          },
+          author: {
+            select: {
+              id: true,
+              name: true
             }
           }
         },
