@@ -14,6 +14,7 @@ const AuthController = require('../controllers/auth.controller');
 const DishController = require('../controllers/dish.controller');
 const LikeController = require('../controllers/like.controller');
 const CommentController = require('../controllers/comment.controller');
+const SaveDishController = require('../controllers/savedish.controller');
 
 router.get('/', async (req, res, next) => {
   res.send({ message: 'Rekados API Start Here...' });
@@ -41,5 +42,8 @@ router.delete('/unlike', session, LikeController.unlike)
 // Comments Routes
 router.get('/comments', session, CommentController.index)
 router.post('/create-comment', session, CommentController.store)
+
+// Saved Dish Routes
+router.get('/save-dish', session, SaveDishController.index)
 
 module.exports = router;
