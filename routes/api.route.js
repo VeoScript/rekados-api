@@ -49,5 +49,6 @@ router.get('/save-dish', session, SaveDishController.index)
 
 // Search Routes
 router.get('/search-dish/:title', session, SearchController.searchDishes)
+router.get('/search-user/:name', session, SearchController.searchUsers)
 
 module.exports = router;
