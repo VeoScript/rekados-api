@@ -11,6 +11,7 @@ var session = ironSession({
 });
 
 const AuthController = require('../controllers/auth.controller');
+const UserController = require('../controllers/user.controller');
 const DishController = require('../controllers/dish.controller');
 const LikeController = require('../controllers/like.controller');
 const CommentController = require('../controllers/comment.controller');
@@ -26,6 +27,9 @@ router.get('/user', session, AuthController.user)
 router.post('/register', session, AuthController.register)
 router.post('/login', session, AuthController.login)
 router.post('/logout', session, AuthController.logout)
+
+// User Routes
+router.get('/user/:id', session, UserController.user)
 
 // Dishes Routes
 router.get('/dishes', DishController.index)
