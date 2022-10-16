@@ -21,8 +21,12 @@ class AuthController {
         },
         select: {
           id: true,
+          profile: true,
           name: true,
-          email: true
+          username: true,
+          email: true,
+          location: true,
+          bio: true
         }
       })
       res.status(200).json(user)
