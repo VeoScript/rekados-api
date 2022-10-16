@@ -46,6 +46,7 @@ class SearchController {
         },
         select: {
           id: true,
+          profile: true,
           name: true,
           username: true,
           location: true
