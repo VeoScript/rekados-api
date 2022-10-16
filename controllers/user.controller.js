@@ -26,7 +26,9 @@ class UserController {
           username: true,
           email: true,
           location: true,
-          bio: true
+          bio: true,
+          dishes: true,
+          likes: true
         }
       })
       res.status(200).json(user)
