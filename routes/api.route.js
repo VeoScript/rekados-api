@@ -48,6 +48,7 @@ router.delete('/unlike', session, LikeController.unlike)
 // Comments Routes
 router.get('/comments', session, CommentController.index)
 router.post('/create-comment', session, CommentController.store)
+router.delete('/delete-comment/:id', session, CommentController.delete)
 
 // Saved Dish Routes
 router.get('/save-dish', session, SaveDishController.index)

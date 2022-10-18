@@ -69,6 +69,27 @@ class CommentController {
       next(createError(e.statusCode, e.message))
       process.exit(1)
     }
+  }
+
+  static delete = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const deleteComment = await prisma.comment.delete({
+        where: {
+          id: String(req.params.slug)
+        }
+      })
+      res.status(200).json(deleteComment)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
   }  
 }
 
