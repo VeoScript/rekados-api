@@ -90,7 +90,9 @@ class SaveDishController {
           }
         },
         orderBy: {
-          createdAt: 'desc'
+          likes: {
+            _count: 'desc'
+          }
         },
         take: limit,
         cursor: cursorObj,
