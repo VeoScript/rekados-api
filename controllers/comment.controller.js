@@ -82,7 +82,7 @@ class CommentController {
     try {
       const deleteComment = await prisma.comment.delete({
         where: {
-          id: String(req.params.slug)
+          id: String(req.params.id)
         }
       })
       res.status(200).json(deleteComment)
