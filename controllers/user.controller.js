@@ -125,7 +125,7 @@ class UserController {
         })
       }
       
-      await prisma.user.update({
+      const updatePassword = await prisma.user.update({
         where: {
           id: String(req.params.id)
         },
@@ -134,9 +134,7 @@ class UserController {
         }
       })
 
-      res.status(200).json({
-        message: 'Changed Successfully'
-      })
+      res.status(200).json(updatePassword)
     } catch (e) {
       next(createError(e.statusCode, e.message))
       process.exit(1)
