@@ -102,7 +102,7 @@ class UserController {
   
       const foundUser = await prisma.user.findMany({
         where: {
-          id: id
+          id: String(req.params.id)
         },
         select: {
           id: true,
