@@ -31,6 +31,8 @@ router.post('/logout', session, AuthController.logout)
 // User Routes
 router.get('/user/:id', session, UserController.user)
 router.put('/change-profile/:id', session, UserController.changeProfile)
+router.put('/update-account/:id', session, UserController.updateAccount)
+router.put('/change-password/:id', session, UserController.changePassword)
 
 // Dishes Routes
 router.get('/dishes', DishController.index)
