@@ -91,7 +91,7 @@ class SaveDishController {
         },
         orderBy: {
           likes: {
-            _count: 'desc'
+            _count: 'asc'
           }
         },
         take: limit,
