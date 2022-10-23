@@ -125,13 +125,16 @@ class UserController {
           message: 'Old password did not match.'
         })
       }
+
+      const salt = await bcrypt.genSalt()
+      const hashPassword = await bcrypt.hash(newPassword, salt)
       
       const updatePassword = await prisma.user.update({
         where: {
           id: String(req.params.id)
         },
         data: {
-          password: newPassword
+          password: hashPassword
         }
       })
 
