@@ -112,7 +112,6 @@ class SearchController {
           image: req.body.image,
           title: req.body.title,
           description: req.body.description,
-          updatedAt: new Date(),
           userId: req.body.userId
         }
       })
@@ -140,7 +139,6 @@ class SearchController {
           image: req.body.image,
           title: req.body.title,
           description: req.body.description,
-          updatedAt: new Date(),
           userId: req.body.userId
         }
       })
