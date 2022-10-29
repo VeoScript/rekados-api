@@ -83,6 +83,9 @@ class SearchController {
           description: true,
           updatedAt: true,
           userId: true
+        },
+        orderBy: {
+          updatedAt: 'desc'
         }
       })
       res.status(200).json(searchHistories)
