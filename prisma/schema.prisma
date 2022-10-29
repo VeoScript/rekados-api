@@ -24,6 +24,7 @@ model User {
   dishes                    Dish[]
   likes                     Like[]
   comments                  Comment[]
+  searchHistory             SearchHistory[]
 
   @@unique([email, username])
 }
@@ -91,4 +92,25 @@ model Comment {
   updatedAt                 DateTime                                    @default(now()) @db.DateTime(6)
 
   @@index([dishSlug, userId])
+}
+
+model SearchHistory {
+  id                        String              @id                     @default(cuid())
+  type                      SearchType
+  searchId                  String
+  slug                      String  
+  image                     String  
+  title                     String  
+  description               String        
+  user                      User                                        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId                    String
+  createdAt                 DateTime                                    @default(now()) @db.DateTime(6)
+  updatedAt                 DateTime                                    @default(now()) @db.DateTime(6)
+
+  @@index([userId])
+}
+
+enum SearchType {
+  DISHES
+  PEOPLE
 }
