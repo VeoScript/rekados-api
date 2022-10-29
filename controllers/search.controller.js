@@ -147,6 +147,50 @@ class SearchController {
       process.exit(1)
     }
   }
+
+  static deleteSearchHistoryDishes = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+    
+    try {
+      const deleteHistory = await prisma.searchHistory.deleteMany({
+        where: {
+          type: 'DISHES',
+          userId: String(req.params.userId)
+        }
+      })
+      res.status(200).json(deleteHistory)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
+  static deleteSearchHistoryPeople = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+    
+    try {
+      const deleteHistory = await prisma.searchHistory.deleteMany({
+        where: {
+          type: 'PEOPLE',
+          userId: String(req.params.userId)
+        }
+      })
+      res.status(200).json(deleteHistory)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
 }
 
 module.exports = SearchController

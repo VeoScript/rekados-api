@@ -61,5 +61,7 @@ router.get('/search-user/:name', session, SearchController.searchUsers)
 router.get('/search-history/:userId', session, SearchController.getSearchHistories)
 router.post('/search-dish-history', session, SearchController.storeSearchHistoryDishes)
 router.post('/search-people-history', session, SearchController.storeSearchHistoryPeople)
+router.delete('/search-dish-history/:userId', session, SearchController.deleteSearchHistoryDishes)
+router.delete('/search-people-history/:userId', session, SearchController.deleteSearchHistoryPeople)
 
 module.exports = router;
