@@ -107,12 +107,12 @@ class SearchController {
       const store = await prisma.searchHistory.create({
         data: {
           type: 'DISHES',
-          searchId: req.body.searchId,
-          slug: req.body.slug,
-          image: req.body.image,
-          title: req.body.title,
-          description: req.body.description,
-          userId: req.body.userId
+          searchId: String(req.body.searchId),
+          slug: String(req.body.slug),
+          image: String(req.body.image),
+          title: String(req.body.title),
+          description: String(req.body.description),
+          userId: String(req.body.userId)
         }
       })
       res.status(200).json(store)
@@ -134,12 +134,12 @@ class SearchController {
       const store = await prisma.searchHistory.create({
         data: {
           type: 'PEOPLE',
-          searchId: req.body.searchId,
-          slug: req.body.slug,
-          image: req.body.image,
-          title: req.body.title,
-          description: req.body.description,
-          userId: req.body.userId
+          searchId: String(req.body.searchId),
+          slug: String(req.body.slug),
+          image: String(req.body.image),
+          title: String(req.body.title),
+          description: String(req.body.description),
+          userId: String(req.body.userId)
         }
       })
       res.status(200).json(store)
