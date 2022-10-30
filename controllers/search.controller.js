@@ -106,25 +106,25 @@ class SearchController {
     try {
       const { searchId, slug, image, title, description, userId } = req.body
 
-      const foundSearchHistories = await prisma.searchHistory.findMany({
-        select: {
-          searchId: searchId
-        }
-      })
+      // const foundSearchHistories = await prisma.searchHistory.findMany({
+      //   select: {
+      //     searchId: searchId
+      //   }
+      // })
 
-      const check_search_history_exist = foundSearchHistories?.some((history) => history.searchId === searchId)
+      // const check_search_history_exist = foundSearchHistories?.some((history) => history.searchId === searchId)
 
-      if (check_search_history_exist) {
-        await prisma.searchHistory.updateMany({
-          where: {
-            searchId: searchId
-          },
-          data: {
-            updatedAt: new Date()
-          }
-        })
-        return
-      }
+      // if (check_search_history_exist) {
+      //   await prisma.searchHistory.updateMany({
+      //     where: {
+      //       searchId: searchId
+      //     },
+      //     data: {
+      //       updatedAt: new Date()
+      //     }
+      //   })
+      //   return
+      // }
 
       const store = await prisma.searchHistory.create({
         data: {
@@ -153,27 +153,27 @@ class SearchController {
     }
 
     try {
-      const { searchId, slug, image, title, description, userId } = req.body
+      // const { searchId, slug, image, title, description, userId } = req.body
 
-      const foundSearchHistories = await prisma.searchHistory.findMany({
-        select: {
-          searchId: searchId
-        }
-      })
+      // const foundSearchHistories = await prisma.searchHistory.findMany({
+      //   select: {
+      //     searchId: searchId
+      //   }
+      // })
 
-      const check_search_history_exist = foundSearchHistories?.some((history) => history.searchId === searchId)
+      // const check_search_history_exist = foundSearchHistories?.some((history) => history.searchId === searchId)
 
-      if (check_search_history_exist) {
-        await prisma.searchHistory.updateMany({
-          where: {
-            searchId: searchId
-          },
-          data: {
-            updatedAt: new Date()
-          }
-        })
-        return
-      }
+      // if (check_search_history_exist) {
+      //   await prisma.searchHistory.updateMany({
+      //     where: {
+      //       searchId: searchId
+      //     },
+      //     data: {
+      //       updatedAt: new Date()
+      //     }
+      //   })
+      //   return
+      // }
 
       const store = await prisma.searchHistory.create({
         data: {
