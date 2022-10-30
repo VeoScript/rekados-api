@@ -108,15 +108,34 @@ class SearchController {
     try {
       const { searchId, slug, image, title, description, userId } = req.body
 
-      const upsertHistory = await prisma.searchHistory.upsert({
+      const foundSearchHistory = await prisma.searchHistory.findMany({
         where: {
           searchId: searchId,
-          userIdTracer: userId
+          userId: userId
         },
-        update: {
-          updatedAt: new Date()
-        },
-        create: {
+        select: {
+          id: true,
+          email: true,
+          password: true
+        }
+      })
+
+      if (foundSearchHistory[0]) {
+        const updateHistory = await prisma.searchHistory.updateMany({
+          where: {
+            searchId: searchId,
+            userId: userId
+          },
+          data: {
+            updatedAt: new Date()
+          }
+        })
+        res.status(200).json(updateHistory)
+        return
+      }
+
+      const storeHistory = await prisma.searchHistory.create({
+        data: {
           type: 'DISHES',
           userIdTracer: searchId,
           searchId: searchId,
@@ -128,7 +147,7 @@ class SearchController {
         }
       })
 
-      res.status(200).json(upsertHistory)
+      res.status(200).json(storeHistory)
     } catch (e) {
       next(createError(e.statusCode, e.message))
       process.exit(1)
@@ -146,15 +165,34 @@ class SearchController {
     try {
       const { searchId, slug, image, title, description, userId } = req.body
 
-      const upsertHistory = await prisma.searchHistory.upsert({
+      const foundSearchHistory = await prisma.searchHistory.findMany({
         where: {
           searchId: searchId,
-          userIdTracer: userId
+          userId: userId
         },
-        update: {
-          updatedAt: new Date()
-        },
-        create: {
+        select: {
+          id: true,
+          email: true,
+          password: true
+        }
+      })
+
+      if (foundSearchHistory[0]) {
+        const updateHistory = await prisma.searchHistory.updateMany({
+          where: {
+            searchId: searchId,
+            userId: userId
+          },
+          data: {
+            updatedAt: new Date()
+          }
+        })
+        res.status(200).json(updateHistory)
+        return
+      }
+
+      const storeHistory = await prisma.searchHistory.create({
+        data: {
           type: 'PEOPLE',
           userIdTracer: searchId,
           searchId: searchId,
@@ -166,7 +204,7 @@ class SearchController {
         }
       })
 
-      res.status(200).json(upsertHistory)
+      res.status(200).json(storeHistory)
     } catch (e) {
       next(createError(e.statusCode, e.message))
       process.exit(1)
