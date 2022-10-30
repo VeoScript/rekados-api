@@ -104,15 +104,37 @@ class SearchController {
     }
 
     try {
+      const { searchId, slug, image, title, description, userId } = req.body
+
+      const foundSearchHistories = await prisma.searchHistory.findMany({
+        select: {
+          searchId: String(req.body.searchId)
+        }
+      })
+
+      const check_search_history_exist = foundSearchHistories.some((history) => history.searchId === String(searchId))
+
+      if (check_search_history_exist) {
+        await prisma.searchHistory.updateMany({
+          where: {
+            searchId: String(searchId)
+          },
+          data: {
+            updatedAt: new Date()
+          }
+        })
+        return
+      }
+
       const store = await prisma.searchHistory.create({
         data: {
           type: 'DISHES',
-          searchId: String(req.body.searchId),
-          slug: String(req.body.slug),
-          image: String(req.body.image),
-          title: String(req.body.title),
-          description: String(req.body.description),
-          userId: String(req.body.userId)
+          searchId: String(searchId),
+          slug: String(slug),
+          image: String(image),
+          title: String(title),
+          description: String(description),
+          userId: String(userId)
         }
       })
       res.status(200).json(store)
@@ -131,15 +153,37 @@ class SearchController {
     }
 
     try {
+      const { searchId, slug, image, title, description, userId } = req.body
+
+      const foundSearchHistories = await prisma.searchHistory.findMany({
+        select: {
+          searchId: String(req.body.searchId)
+        }
+      })
+
+      const check_search_history_exist = foundSearchHistories.some((history) => history.searchId === String(searchId))
+
+      if (check_search_history_exist) {
+        await prisma.searchHistory.updateMany({
+          where: {
+            searchId: String(searchId)
+          },
+          data: {
+            updatedAt: new Date()
+          }
+        })
+        return
+      }
+
       const store = await prisma.searchHistory.create({
         data: {
           type: 'PEOPLE',
-          searchId: String(req.body.searchId),
-          slug: String(req.body.slug),
-          image: String(req.body.image),
-          title: String(req.body.title),
-          description: String(req.body.description),
-          userId: String(req.body.userId)
+          searchId: String(searchId),
+          slug: String(slug),
+          image: String(image),
+          title: String(title),
+          description: String(description),
+          userId: String(userId)
         }
       })
       res.status(200).json(store)
