@@ -110,13 +110,15 @@ class SearchController {
 
       const upsertHistory = await prisma.searchHistory.upsert({
         where: {
-          searchId: searchId
+          searchId: searchId,
+          userIdTracer: userId
         },
         update: {
           updatedAt: new Date()
         },
         create: {
           type: 'DISHES',
+          userIdTracer: searchId,
           searchId: searchId,
           slug: slug,
           image: image,
@@ -146,13 +148,15 @@ class SearchController {
 
       const upsertHistory = await prisma.searchHistory.upsert({
         where: {
-          searchId: searchId
+          searchId: searchId,
+          userIdTracer: userId
         },
         update: {
           updatedAt: new Date()
         },
         create: {
           type: 'PEOPLE',
+          userIdTracer: searchId,
           searchId: searchId,
           slug: slug,
           image: image,
