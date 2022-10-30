@@ -96,6 +96,7 @@ model Comment {
 
 model SearchHistory {
   id                        String              @id                     @default(cuid())
+  userIdTracer              String              @unique
   type                      SearchType
   searchId                  String              @unique
   slug                      String  
