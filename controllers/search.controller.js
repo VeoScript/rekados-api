@@ -112,11 +112,6 @@ class SearchController {
         where: {
           searchId: searchId,
           userId: userId
-        },
-        select: {
-          id: true,
-          email: true,
-          password: true
         }
       })
 
@@ -169,11 +164,6 @@ class SearchController {
         where: {
           searchId: searchId,
           userId: userId
-        },
-        select: {
-          id: true,
-          email: true,
-          password: true
         }
       })
 
