@@ -132,7 +132,6 @@ class SearchController {
       const storeHistory = await prisma.searchHistory.create({
         data: {
           type: 'DISHES',
-          userIdTracer: searchId,
           searchId: searchId,
           slug: slug,
           image: image,
@@ -184,7 +183,6 @@ class SearchController {
       const storeHistory = await prisma.searchHistory.create({
         data: {
           type: 'PEOPLE',
-          userIdTracer: searchId,
           searchId: searchId,
           slug: slug,
           image: image,
