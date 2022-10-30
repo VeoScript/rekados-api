@@ -97,7 +97,7 @@ model Comment {
 model SearchHistory {
   id                        String              @id                     @default(cuid())
   type                      SearchType
-  searchId                  String              @unique
+  searchId                  String
   slug                      String  
   image                     String  
   title                     String  
