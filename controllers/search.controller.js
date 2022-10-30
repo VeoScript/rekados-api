@@ -108,16 +108,16 @@ class SearchController {
 
       const foundSearchHistories = await prisma.searchHistory.findMany({
         select: {
-          searchId: String(req.body.searchId)
+          searchId: searchId
         }
       })
 
-      const check_search_history_exist = foundSearchHistories.some((history) => history.searchId === String(searchId))
+      const check_search_history_exist = foundSearchHistories?.some((history) => history.searchId === searchId)
 
       if (check_search_history_exist) {
         await prisma.searchHistory.updateMany({
           where: {
-            searchId: String(searchId)
+            searchId: searchId
           },
           data: {
             updatedAt: new Date()
@@ -129,12 +129,12 @@ class SearchController {
       const store = await prisma.searchHistory.create({
         data: {
           type: 'DISHES',
-          searchId: String(searchId),
-          slug: String(slug),
-          image: String(image),
-          title: String(title),
-          description: String(description),
-          userId: String(userId)
+          searchId: searchId,
+          slug: slug,
+          image: image,
+          title: title,
+          description: description,
+          userId: userId
         }
       })
       res.status(200).json(store)
@@ -157,16 +157,16 @@ class SearchController {
 
       const foundSearchHistories = await prisma.searchHistory.findMany({
         select: {
-          searchId: String(req.body.searchId)
+          searchId: searchId
         }
       })
 
-      const check_search_history_exist = foundSearchHistories.some((history) => history.searchId === String(searchId))
+      const check_search_history_exist = foundSearchHistories?.some((history) => history.searchId === searchId)
 
       if (check_search_history_exist) {
         await prisma.searchHistory.updateMany({
           where: {
-            searchId: String(searchId)
+            searchId: searchId
           },
           data: {
             updatedAt: new Date()
@@ -178,12 +178,12 @@ class SearchController {
       const store = await prisma.searchHistory.create({
         data: {
           type: 'PEOPLE',
-          searchId: String(searchId),
-          slug: String(slug),
-          image: String(image),
-          title: String(title),
-          description: String(description),
-          userId: String(userId)
+          searchId: searchId,
+          slug: slug,
+          image: image,
+          title: title,
+          description: description,
+          userId: userId
         }
       })
       res.status(200).json(store)
