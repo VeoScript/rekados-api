@@ -71,7 +71,8 @@ class SearchController {
     try {
       const searchHistories = await prisma.searchHistory.findMany({
         where: {
-          userId: String(req.params.userId)
+          userId: String(req.params.userId),
+          type: String(req.params.type)
         },
         select: {
           id: true,
