@@ -153,7 +153,7 @@ class SearchController {
     }
 
     try {
-      // const { searchId, slug, image, title, description, userId } = req.body
+      const { searchId, slug, image, title, description, userId } = req.body
 
       // const foundSearchHistories = await prisma.searchHistory.findMany({
       //   select: {
