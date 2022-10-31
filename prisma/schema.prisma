@@ -25,6 +25,8 @@ model User {
   likes                     Like[]
   comments                  Comment[]
   searchHistory             SearchHistory[]
+  notificationFrom          Notification[]                              @relation("notificationFrom")
+  notificationTo            Notification[]                              @relation("notificationTo")
 
   @@unique([email, username])
 }
@@ -42,6 +44,7 @@ model Dish {
   procedures                Procedure[]
   likes                     Like[]
   comments                  Comment[]
+  notificationTo            Notification[]                              @relation("notificationDish")
   author                    User                                        @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId                  String
   createdAt                 DateTime                                    @default(now()) @db.DateTime(6)
@@ -110,7 +113,28 @@ model SearchHistory {
   @@index([userId])
 }
 
+model Notification {
+  id                        String              @id                     @default(cuid())
+  type                      NotificationType
+  read                      Boolean                                     @default(false)
+  message                   String              @db.LongText
+  createdAt                 DateTime                                    @default(now()) @db.DateTime(6)
+  updatedAt                 DateTime                                    @default(now()) @db.DateTime(6)
+  dish                      Dish?                                       @relation("notificationDish", fields: [dishSlug], references: [slug], onDelete: Cascade)
+  dishSlug                  String?
+  notificationFrom          User?                                       @relation("notificationFrom", fields: [notificationFromId], references: [id], onDelete: Cascade)
+  notificationFromId        String
+  notificationTo            User?                                       @relation("notificationTo", fields: [notificationToId], references: [id], onDelete: Cascade)
+  notificationToId          String
+}
+
 enum SearchType {
   DISHES
   PEOPLE
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  FOLLOWS
 }
