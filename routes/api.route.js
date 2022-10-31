@@ -17,6 +17,7 @@ const LikeController = require('../controllers/like.controller');
 const CommentController = require('../controllers/comment.controller');
 const SaveDishController = require('../controllers/savedish.controller');
 const SearchController = require('../controllers/search.controller');
+const NotificationController = require('../controllers/notification.controller');
 
 router.get('/', async (req, res, next) => {
   res.send({ message: 'Rekados API Start Here...' });
@@ -63,5 +64,11 @@ router.post('/search-dish-history', session, SearchController.storeSearchHistory
 router.post('/search-people-history', session, SearchController.storeSearchHistoryPeople)
 router.delete('/search-dish-history/:userId', session, SearchController.deleteSearchHistoryDishes)
 router.delete('/search-people-history/:userId', session, SearchController.deleteSearchHistoryPeople)
+
+// Notification Routes
+router.get('/notifications', session, NotificationController.index)
+router.post('/send-notifications', session, NotificationController.store)
+router.put('/read-notification/:notificationId', session, NotificationController.read)
+router.put('/read-all-notifications', session, NotificationController.markAllAsRead)
 
 module.exports = router;
