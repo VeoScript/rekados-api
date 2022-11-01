@@ -27,7 +27,7 @@ class AuthController {
           email: true,
           location: true,
           bio: true,
-          notificationFrom: {
+          notificationTo: {
             select: {
               id: true,
               type: true,
