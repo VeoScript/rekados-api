@@ -26,7 +26,38 @@ class AuthController {
           username: true,
           email: true,
           location: true,
-          bio: true
+          bio: true,
+          notificationFrom: {
+            select: {
+              id: true,
+              type: true,
+              read: true,
+              message: true,
+              createdAt: true,
+              dish: {
+                select: {
+                  id: true,
+                  slug: true,
+                  image: true,
+                  title: true
+                }
+              },
+              notificationFrom: {
+                select: {
+                  id: true,
+                  name: true,
+                  username: true
+                }
+              },
+              notificationTo: {
+                select: {
+                  id: true,
+                  name: true,
+                  username: true
+                }
+              }
+            }
+          }
         }
       })
       res.status(200).json(user)
