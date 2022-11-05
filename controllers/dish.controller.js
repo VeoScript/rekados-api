@@ -12,13 +12,6 @@ class DishController {
       const cursorObj = cursor === '' ? undefined : { id: String(cursor) }
 
       const dishes = await prisma.dish.findMany({
-        where: {
-          OR: [
-            {
-              location: String(req.query.location)
-            }
-          ]
-        },
         select: {
           id: true,
           slug: true,
