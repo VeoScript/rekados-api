@@ -69,6 +69,30 @@ class NotificationController {
     }
   }
 
+  static countNotifications = async (req, res, next) => {
+    if (req.session.user === undefined) {
+      res.status(401).json({
+        message: 'Unauthorized!'
+      })
+      return
+    }
+
+    try {
+      const countNotifications = await prisma.notification.aggregate({
+        where: {
+          notificationToId: String(req.session.user.id),
+          read: false
+        },
+        _count: true
+      })
+
+      res.status(200).json(countNotifications)
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
   static store = async (req, res, next) => {
     if (req.session.user === undefined) {
       res.status(401).json({
