@@ -67,6 +67,7 @@ router.delete('/search-people-history/:userId', session, SearchController.delete
 
 // Notification Routes
 router.get('/notifications', session, NotificationController.index)
+router.get('/count-notifications', session, NotificationController.countNotifications)
 router.post('/send-notifications', session, NotificationController.store)
 router.put('/read-notification/:notificationId', session, NotificationController.read)
 router.put('/read-all-notifications', session, NotificationController.markAllAsRead)
