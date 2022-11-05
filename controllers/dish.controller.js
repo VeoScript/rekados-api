@@ -13,7 +13,7 @@ class DishController {
 
       const dishes = await prisma.dish.findMany({
         where: {
-          AND: [
+          OR: [
             {
               location: String(req.query.location)
             }
