@@ -32,6 +32,7 @@ router.post('/logout', session, AuthController.logout)
 
 // Forgot & Reset Password Routes
 router.post('/forgot-password', ResetPasswordController.forgotPassword)
+router.post('/reset-password', ResetPasswordController.resetPassword)
 
 // User Routes
 router.get('/user/:id', session, UserController.user)
