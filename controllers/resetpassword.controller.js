@@ -28,7 +28,8 @@ class ResetPasswordController {
         })
       }
 
-      const payload = { userId: foundUser[0].id }
+      const userId = foundUser[0].id
+      const payload = { userId: userId }
       const secret = process.env.JWT_SECRET
       const token = jwt.encode(payload, secret)
 
@@ -50,7 +51,7 @@ class ResetPasswordController {
       }
 
       res.status(200).json({
-        reset_code: String(reset_code),
+        reset_code,
         message: 'Check your email to get the reset password code!'
       })
 
