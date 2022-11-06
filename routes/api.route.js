@@ -18,6 +18,7 @@ const CommentController = require('../controllers/comment.controller');
 const SaveDishController = require('../controllers/savedish.controller');
 const SearchController = require('../controllers/search.controller');
 const NotificationController = require('../controllers/notification.controller');
+const ResetPasswordController = require('../controllers/resetpassword.controller');
 
 router.get('/', async (req, res, next) => {
   res.send({ message: 'Rekados API Start Here...' });
@@ -28,6 +29,9 @@ router.get('/user', session, AuthController.user)
 router.post('/register', session, AuthController.register)
 router.post('/login', session, AuthController.login)
 router.post('/logout', session, AuthController.logout)
+
+// Forgot & Reset Password Routes
+router.post('/forgot-password', ResetPasswordController.forgotPassword)
 
 // User Routes
 router.get('/user/:id', session, UserController.user)
