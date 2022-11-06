@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 require('express-async-errors');
+var bcrypt = require('bcryptjs')
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -44,6 +45,29 @@ class ResetPasswordController {
         message: 'Check your email to get the reset password code!'
       })
 
+    } catch (e) {
+      next(createError(e.statusCode, e.message))
+      process.exit(1)
+    }
+  }
+
+  static resetPassword = async (req, res, next) => {
+    try {
+      const { userId, newpassword } = req.body
+
+      const salt = await bcrypt.genSalt()
+      const hashPassword = await bcrypt.hash(newpassword, salt)
+  
+      const resetPassword = await prisma.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          password: hashPassword
+        }
+      })
+
+      res.status(200).json(resetPassword)
     } catch (e) {
       next(createError(e.statusCode, e.message))
       process.exit(1)
