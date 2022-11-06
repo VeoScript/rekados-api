@@ -11,7 +11,7 @@ class ResetPasswordController {
     try {
       const { email } = req.body
   
-      const foundUser = await prisma.user.findMany({
+      const foundUser = await prisma.user.findFirst({
         where: {
           email: email
         },
@@ -22,18 +22,18 @@ class ResetPasswordController {
         }
       })
   
-      if (!foundUser[0]) {
+      if (!foundUser) {
         return res.status(400).json({
           message: 'Email not found.'
         })
       }
 
-      const userId = foundUser[0].id
+      const userId = foundUser.id
       const payload = { userId: userId }
       const secret = process.env.JWT_SECRET
       const token = jwt.encode(payload, secret)
 
-      const name = foundUser[0].name
+      const name = foundUser.name
       const message = 'To reset your password in Rekados App paste this reset password code'
       const reset_code = String(token)
 
