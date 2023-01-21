@@ -113,6 +113,14 @@ class NotificationController {
           notificationToId: notificationToId
         }
       })
+      
+      // const io = req.app.get('socketio_global')
+
+      // // socket.io trigger push notification in client-side
+      // io.emit('new_notification', {
+      //   title: 'Rekados',
+      //   message: message
+      // })
 
       res.status(200).json(notification)
     } catch (e) {
