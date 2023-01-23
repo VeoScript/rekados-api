@@ -14,5 +14,6 @@ Good user experience and easy to understand. The instructions and procedures are
 - PlanetScale
 - MySQL
 - Render
+- Socket.io
 
 Designed and developed with 5% of 🧠 by Jerome Villaruel **VEOSCRIPT**.
