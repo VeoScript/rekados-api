@@ -46,6 +46,14 @@ app.use((req, res, next) => {
   next(createError.NotFound());
 });
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
+
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send({
